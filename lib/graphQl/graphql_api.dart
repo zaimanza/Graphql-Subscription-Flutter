@@ -14,7 +14,9 @@ GraphQLClient clientToQuery() {
     // link: HttpLink(uri: 'https://hirodeli.herokuapp.com/graphql'),
     // cache: InMemoryCache(),
 
-    cache: GraphQLCache(store: HiveStore()),
+    cache: GraphQLCache(
+      store: HiveStore(),
+    ),
     defaultPolicies: DefaultPolicies(
       watchQuery: policies,
       watchMutation: policies,
@@ -27,10 +29,24 @@ GraphQLClient clientToQuery() {
 
         return 'Bearer ';
       },
-    ).concat(
-      HttpLink(
-        'https://hdmerchantbackend.herokuapp.com/graphql',
-      ),
-    ),
+    )
+        .concat(
+          HttpLink(
+            'https://hdmerchantbackend.herokuapp.com/graphql',
+          ),
+        )
+        .concat(
+          WebSocketLink(
+            'ws://hdmerchantbackend.herokuapp.com/subscriptions',
+            config: const SocketClientConfig(
+                autoReconnect: true,
+                inactivityTimeout: Duration(
+                  seconds: 30,
+                ),
+                initialPayload: {
+                  'headers': {'Authorization': 'Bearer'},
+                }),
+          ),
+        ),
   );
 }

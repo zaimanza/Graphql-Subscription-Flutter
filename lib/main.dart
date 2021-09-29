@@ -258,6 +258,29 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                   const Text("Mutation Data:"),
                                   Text(passMutateData),
+                                  const Text("Subscription Data:"),
+                                  // Subscription(
+                                  //   options: SubscriptionOptions(
+                                  //     document: gql(channelAdded),
+                                  //   ),
+                                  //   builder: (result) {
+                                  //     if (result.hasException) {
+                                  //       return Text(
+                                  //           result.exception.toString());
+                                  //     }
+                                  //
+                                  //     if (result.isLoading) {
+                                  //       return const Center(
+                                  //         child: CircularProgressIndicator(),
+                                  //       );
+                                  //     }
+                                  //     // ResultAccumulator is a provided helper widget for collating subscription results.
+                                  //     // careful though! It is stateful and will discard your results if the state is disposed
+                                  //     return Text(
+                                  //       result.data.toString(),
+                                  //     );
+                                  //   },
+                                  // ),
                                 ],
                               ),
                               if (isLoadingCircularOn == true) ...[

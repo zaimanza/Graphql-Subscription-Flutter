@@ -49,6 +49,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController emailController = TextEditingController();
   bool isEmailEmpty = false;
+  String passMutateData = "";
 
   bool isLoadingCircularOn = false;
 
@@ -73,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
     print("NEW NEW NEW");
     print(loginObj);
     QueryResult result;
-    result = await clientQuery.query(
-      QueryOptions(
+    result = await clientQuery.mutate(
+      MutationOptions(
         document: gql(merchLogIn),
         variables: loginObj,
       ),
@@ -102,6 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         isLoadingCircularOn = false;
       });
+      print(result.data!["addChannel"].toString());
+      passMutateData = result.data!["addChannel"].toString();
     }
   }
 
@@ -135,9 +138,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  const Text(
-                                    'You have pushed the button this many times:',
-                                  ),
                                   Container(
                                     width: double.infinity,
                                     height: 50,
@@ -250,9 +250,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                           );
                                         }
                                       },
-                                      child: const Text("SendEmail"),
+                                      child: const Text("Send Name"),
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  const Text("Mutation Data:"),
+                                  Text(passMutateData),
                                 ],
                               ),
                               if (isLoadingCircularOn == true) ...[

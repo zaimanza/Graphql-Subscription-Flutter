@@ -37,7 +37,7 @@ GraphQLClient clientToQuery() {
         )
         .concat(
           WebSocketLink(
-            'ws://hdmerchantbackend.herokuapp.com/subscriptions',
+            'ws://hdmerchantbackend.herokuapp.com/graphql',
             config: const SocketClientConfig(
                 autoReconnect: true,
                 inactivityTimeout: Duration(

@@ -20,18 +20,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ConnectivityProvider>(
-          create: (context) => ConnectivityProvider(),
+    return GraphQLProvider(
+      client: client,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ConnectivityProvider>(
+            create: (context) => ConnectivityProvider(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const MyHomePage(title: 'Flutter Demo Home Page'),
         ),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
   }
@@ -259,28 +262,31 @@ class _MyHomePageState extends State<MyHomePage> {
                                   const Text("Mutation Data:"),
                                   Text(passMutateData),
                                   const Text("Subscription Data:"),
-                                  // Subscription(
-                                  //   options: SubscriptionOptions(
-                                  //     document: gql(channelAdded),
-                                  //   ),
-                                  //   builder: (result) {
-                                  //     if (result.hasException) {
-                                  //       return Text(
-                                  //           result.exception.toString());
-                                  //     }
-                                  //
-                                  //     if (result.isLoading) {
-                                  //       return const Center(
-                                  //         child: CircularProgressIndicator(),
-                                  //       );
-                                  //     }
-                                  //     // ResultAccumulator is a provided helper widget for collating subscription results.
-                                  //     // careful though! It is stateful and will discard your results if the state is disposed
-                                  //     return Text(
-                                  //       result.data.toString(),
-                                  //     );
-                                  //   },
-                                  // ),
+                                  Subscription(
+                                    options: SubscriptionOptions(
+                                      document: gql(channelAdded),
+                                      variables: {
+                                        "name": "airman",
+                                      },
+                                    ),
+                                    builder: (result) {
+                                      if (result.isLoading) {
+                                        print("DATA IS LOADING");
+                                      }
+                                      if (result.hasException) {
+                                        print("DATA IS ERROR");
+                                        print(result.exception);
+                                      }
+                                      if (result.data != null) {
+                                        print("DATA IS DATA");
+                                        print(result.data.toString());
+                                      }
+                                      // if (result.data != null) {
+                                      //   print("ada subscription");
+                                      // }
+                                      return Container();
+                                    },
+                                  ),
                                 ],
                               ),
                               if (isLoadingCircularOn == true) ...[

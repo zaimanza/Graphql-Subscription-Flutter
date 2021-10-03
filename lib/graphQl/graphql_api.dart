@@ -15,6 +15,16 @@ GraphQLClient clientToQuery() {
   );
   final WebSocketLink socketLink = WebSocketLink(
     'ws://hdmerchantbackend.herokuapp.com/graphql',
+    config: const SocketClientConfig(
+      parser: ResponseParser(),
+      // autoReconnect: true,
+      // inactivityTimeout: Duration(
+      //   seconds: 30,
+      // ),
+      initialPayload: {
+        'headers': {'Authorization': 'Bearer'},
+      },
+    ),
   );
 
   link = Link.split((request) => request.isSubscription, socketLink, link);

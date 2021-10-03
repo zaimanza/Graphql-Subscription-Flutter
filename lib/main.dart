@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     QueryResult result;
     result = await clientQuery.mutate(
       MutationOptions(
-        document: gql(merchLogIn),
+        document: gql(addChannel),
         variables: loginObj,
       ),
     );
@@ -215,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               isEmailEmpty = true;
                                             } else {
                                               isEmailEmpty = false;
-                                              loginObj['name'] =
+                                              loginObj['addChannelName'] =
                                                   emailController.text;
                                             }
                                           });
@@ -266,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     options: SubscriptionOptions(
                                       document: gql(channelAdded),
                                       variables: {
-                                        "name": "airman",
+                                        "name": "aiman",
                                       },
                                     ),
                                     builder: (result) {
@@ -280,6 +280,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                       if (result.data != null) {
                                         print("DATA IS DATA");
                                         print(result.data.toString());
+                                        return Container(
+                                          color: Colors.red,
+                                          height: 10,
+                                          width: 10,
+                                        );
                                       }
                                       // if (result.data != null) {
                                       //   print("ada subscription");

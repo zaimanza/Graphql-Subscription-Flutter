@@ -1,21 +1,17 @@
-const String merchLogIn = r"""
-mutation add_channel($name: String!) {
-  addChannel(
-    name: $name
-  ) {
-    id,
-    name,
+const String addChannel = r"""
+mutation IdMutation($addChannelName: String!) {
+  addChannel(name: $addChannelName) {
+    id
+    name
   }
 }
 """;
 
 const String channelAdded = r"""
-subscription channel_added($name: String!) {
-  channelAdded(
-    name: $name
-  ) {
-    id,
-    name,
-  }
+subscription channelAdded ($name: String!) {
+    channelAdded (name: $name) {
+        id,
+        name,
+    }
 }
 """;

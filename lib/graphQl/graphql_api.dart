@@ -18,9 +18,9 @@ GraphQLClient clientToQuery() {
     config: const SocketClientConfig(
       parser: ResponseParser(),
       // autoReconnect: true,
-      // inactivityTimeout: Duration(
-      //   seconds: 30,
-      // ),
+      inactivityTimeout: Duration(
+        minutes: 30,
+      ),
       initialPayload: {
         'headers': {'Authorization': 'Bearer'},
       },
@@ -41,7 +41,7 @@ GraphQLClient clientToQuery() {
       ),
       link: AuthLink(
         getToken: () async {
-          print("Getting Token 1");
+          // print("Getting Token 1");
 
           return 'Bearer ';
         },

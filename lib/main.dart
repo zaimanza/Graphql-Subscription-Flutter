@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -56,11 +58,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool isLoadingCircularOn = false;
 
+  late StreamSubscription streamSubscription;
+
   @override
   void initState() {
     super.initState();
     Provider.of<ConnectivityProvider>(context, listen: false)
         .startConnectionProvider();
+    streamSubscription = clientQuery
+        .subscribe(
+      SubscriptionOptions(
+        document: gql(channelAdded),
+        variables: {
+          "name": "aiman",
+        },
+      ),
+    )
+        .listen((result) {
+      print(result.data);
+    });
   }
 
   @override
@@ -68,14 +84,15 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
     Provider.of<ConnectivityProvider>(context, listen: false)
         .disposeConnectionProvider();
+    streamSubscription.cancel();
   }
 
   loginGqlCall(loginObj) async {
     setState(() {
       isLoadingCircularOn = true;
     });
-    print("NEW NEW NEW");
-    print(loginObj);
+    // print("NEW NEW NEW");
+    // print(loginObj);
     QueryResult result;
     result = await clientQuery.mutate(
       MutationOptions(
@@ -94,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //     content: Text(result.exception!.graphqlErrors[0].message.toString()),
       //   ),
       // );
-      print(result.exception!.graphqlErrors);
+      // print(result.exception!.graphqlErrors);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("There is an error."),
@@ -106,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         isLoadingCircularOn = false;
       });
-      print(result.data!["addChannel"].toString());
+      // print(result.data!["addChannel"].toString());
       passMutateData = result.data!["addChannel"].toString();
     }
   }
@@ -206,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ),
                                       onPressed: () async {
                                         FocusScope.of(context).unfocus();
-                                        print("hi aiman");
+                                        // print("hi aiman");
                                         if (emailController.text.isNotEmpty) {
                                           Map<String, dynamic> loginObj = {};
                                           // check email
@@ -271,15 +288,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     builder: (result) {
                                       if (result.isLoading) {
-                                        print("DATA IS LOADING");
+                                        // print("DATA IS LOADING");
                                       }
-                                      if (result.hasException) {
-                                        print("DATA IS ERROR");
-                                        print(result.exception);
-                                      }
+                                      // if (result.hasException) {
+                                      //   print("DATA IS ERROR");
+                                      //   print(result.exception);
+                                      // }
                                       if (result.data != null) {
-                                        print("DATA IS DATA");
-                                        print(result.data.toString());
+                                        // print("DATA IS DATA");
+                                        // print(result.data.toString());
                                         return Container(
                                           color: Colors.red,
                                           height: 10,

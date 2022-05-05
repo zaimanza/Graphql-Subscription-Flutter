@@ -1,16 +1,6 @@
-# flutter_graphql_subscription
+# graphql-Subscription-Flutter
 
-A new Flutter project.
+Integration between flutter and a graphql backend API to implement subscription.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![image](https://user-images.githubusercontent.com/36519974/166883385-4f2dc884-cb1d-4d6c-9c3d-029864d41467.png)
+![image](https://user-images.githubusercontent.com/36519974/166883442-3afb1c1e-f158-4e25-af51-788589cb5b68.png)
